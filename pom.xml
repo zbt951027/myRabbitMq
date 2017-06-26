@@ -46,6 +46,7 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>myrabbit-base</module>
+		<module>myrabbit-base</module> 
+		<module>myrabbit-public</module>
 	</modules>
 </project> 

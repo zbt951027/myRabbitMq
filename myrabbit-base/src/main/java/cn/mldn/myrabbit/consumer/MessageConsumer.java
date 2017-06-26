@@ -21,7 +21,6 @@ public class MessageConsumer {
 		factory.setPort(PORT); 
 		factory.setUsername("mldnjava");
 		factory.setPassword("hello");	
-		factory.setVirtualHost("hello"); 
 		Connection conn = factory.newConnection();	//取得一个新的RabbitMQ的连接
 		Channel channel = conn.createChannel();		//创建一个新的通道
 		channel.queueDeclare(QUEUE_NAME, true, false, true, null); 
@@ -29,15 +28,13 @@ public class MessageConsumer {
 		//在Rabbit中所有消费者的信息是用过一个回调方法完整的哦
 		Consumer consumer = new DefaultConsumer(channel) {
 			@Override
-			public void handleDelivery(String consumerTag, 
-					Envelope envelope, 
-					BasicProperties properties, 
-					byte[] body) throws IOException { //需要复写指定的方法实现消息处理
+			public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body)
+					throws IOException { //需要复写指定的方法实现消息处理
 				String message = new String(body);
 				System.out.println("××××× 『消息消费者』 ×××××" + message); 
 				// channel.basicAck(envelope.getDeliveryTag(), false); 	// 表示本消息通过一个消息的标签实现了应答处理
 			};
 		};
-		channel.basicConsume(QUEUE_NAME, consumer);		//消息消费  
-	}
+		channel.basicConsume(QUEUE_NAME, consumer);		//消息消费 
+	}  
 }
