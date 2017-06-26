@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd"> <!-- 定义rabbitmq配置的相关属性文件信息 -->
+	<context:property-placeholder location="classpath:rabbitmq.properties" /> <!-- 如果要想进行RabbiMQ的操作管理，则首先一定要准备出一个连接工厂类 -->
+
+	<rabbit:connection-factory id="connectionFactory"
+		host="${mq.rabbit.host}" port="${mq.rabbit.port}" username="${mq.rabbit.username}"
+		password="${mq.rabbit.password}" virtual-host="${mq.rabbit.vhost}" />
+		
+	<!-- 所有的连接工厂要求被RabbitMQ所管理 -->
+	<rabbit:admin connection-factory="connectionFactory" />
+	
+	<!-- 创建一个队列信息 -->
+	<rabbit:queue id="myQueue" durable="true" auto-delete="true"
+		exclusive="false" name="mldn.queue.title" />
+		
+	<!-- 下面实现一个直连的操作模式 -->
+	<rabbit:direct-exchange id="mq-direct"
+		name="${mq.rabbit.exchange}" durable="true" auto-delete="true">
+		<rabbit:bindings>
+		<!-- 现在要求绑定到指定的队列之中 -->
+			<rabbit:binding queue="myQueue" key="mldn-key" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	
+	<!-- 定义具体的消费处理类 -->
+	<bean id="messageConsumer" class="cn.mldn.myrabbit.consumer.MessageConsumer" />
+	
+	<!-- 启动消费监听程序 -->
+	<rabbit:listener-container
+		connection-factory="connectionFactory">
+		<rabbit:listener ref="messageConsumer" queues="myQueue" />
+	</rabbit:listener-container>
+</beans> 

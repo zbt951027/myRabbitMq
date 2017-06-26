@@ -5,10 +5,10 @@
 	<groupId>cn.mldn</groupId>
 	<artifactId>myrabbit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging> 
+	<packaging>pom</packaging>
 
 	<name>myrabbit</name>
-	<url>http://maven.apache.org</url> 
+	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +29,19 @@
 				<artifactId>amqp-client</artifactId>
 				<version>4.1.1</version>
 			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.amqp</groupId>
+				<artifactId>spring-rabbit</artifactId>
+				<version>1.7.3.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>4.3.9.RELEASE</version>
+				<scope>test</scope>
+			</dependency> 
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -46,7 +59,8 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>myrabbit-base</module> 
+		<module>myrabbit-base</module>
 		<module>myrabbit-public</module>
+		<module>myrabbit-spring</module>
 	</modules>
 </project> 
