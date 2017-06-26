@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>cn.mldn</groupId>
+	<artifactId>myrabbit</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging> 
+
+	<name>myrabbit</name>
+	<url>http://maven.apache.org</url> 
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.8</jdk.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.rabbitmq</groupId>
+				<artifactId>amqp-client</artifactId>
+				<version>4.1.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<finalName>myrabbit</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source> <!-- 源代码使用的开发版本 -->
+					<target>${jdk.version}</target> <!-- 需要生成的目标class文件的编译版本 -->
+					<encode>${project.build.sourceEncoding}</encode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<modules>
+		<module>myrabbit-base</module>
+	</modules>
+</project> 
